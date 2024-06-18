@@ -14,7 +14,7 @@ export const updateTaskController = async (req: Request, res: Response) => {
     const { updateTaskUsecase, taskValidator } = req.container
       ?.cradle as UpdateTaskContainer;
 
-    const params = taskValidator.validateUpdateTaskInput(req.body);
+    const params = await taskValidator.validateUpdateTaskInput(req.body);
 
     const updatedTask = await updateTaskUsecase(params);
 

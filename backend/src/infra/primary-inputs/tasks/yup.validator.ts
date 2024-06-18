@@ -18,8 +18,8 @@ export const updateTaskSchema = object({
 });
 
 export interface TaskValidator {
-  validateCreateTaskInput: (data: JSONObject) => CreateTaskInputParams;
-  validateUpdateTaskInput: (data: JSONObject) => UpdateTaskInputParams;
+  validateCreateTaskInput: (data: JSONObject) => Promise<CreateTaskInputParams>;
+  validateUpdateTaskInput: (data: JSONObject) => Promise<UpdateTaskInputParams>;
 }
 
 export interface TaskYupValidatorProps {
@@ -29,12 +29,22 @@ export interface TaskYupValidatorProps {
 export const TaskYupValidator = ({
   handleValidation,
 }: TaskYupValidatorProps): TaskValidator => {
-  const validateCreateTaskInput = (data: JSONObject): CreateTaskInputParams => {
-    return handleValidation<CreateTaskInputParams>(createTaskSchema, data);
+  const validateCreateTaskInput = async (
+    data: JSONObject,
+  ): Promise<CreateTaskInputParams> => {
+    return await handleValidation<CreateTaskInputParams>(
+      createTaskSchema,
+      data,
+    );
   };
 
-  const validateUpdateTaskInput = (data: JSONObject): UpdateTaskInputParams => {
-    return handleValidation<UpdateTaskInputParams>(updateTaskSchema, data);
+  const validateUpdateTaskInput = async (
+    data: JSONObject,
+  ): Promise<UpdateTaskInputParams> => {
+    return await handleValidation<UpdateTaskInputParams>(
+      updateTaskSchema,
+      data,
+    );
   };
 
   return {
