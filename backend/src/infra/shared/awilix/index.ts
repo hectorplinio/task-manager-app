@@ -7,10 +7,13 @@ import {
 import { TaskMongooseRepository } from '@infra/secondary-outputs/tasks/mongoose/repository';
 import { asFunction, AwilixContainer, createContainer } from 'awilix';
 import { HandleValidation, IHandleValidation } from '@infra/shared/yup/index';
+import { GetAllTasksUsecase } from '@application/tasks/usecases/getAll.port';
+import { getAllTasksUsecase } from '@application/tasks/usecases/getAll.usecase';
 
 interface Cradle {
   taskRepository: ReturnType<typeof TaskMongooseRepository>;
   createTaskUsecase: CreateTaskUsecase;
+  getAllTasksUsecase: GetAllTasksUsecase;
   taskValidator: TaskValidator;
   handleValidation: IHandleValidation;
 }
@@ -22,6 +25,7 @@ container.register({
   createTaskUsecase: asFunction(createTaskUsecase),
   taskValidator: asFunction(TaskYupValidator).singleton(),
   handleValidation: asFunction(HandleValidation).singleton(),
+  getAllTasksUsecase: asFunction(getAllTasksUsecase),
 });
 
 export { container };

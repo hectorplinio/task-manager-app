@@ -1,4 +1,6 @@
-import { BaseRepository } from '@application/shared/repository';
 import { Task } from '@domain/tasks/model';
 
-export type TaskRepository = BaseRepository<Task>;
+export interface TaskRepository {
+  create: (data: Task) => Promise<Task>;
+  getAll: () => Promise<Task[]>;
+}
