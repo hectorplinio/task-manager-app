@@ -1,15 +1,25 @@
 import { CreateTaskInputParams } from '@application/tasks/usecases/create.port';
+import { UpdateTaskInputParams } from '@application/tasks/usecases/update.port';
+import { StatusTask } from '@domain/tasks/model';
 import { JSONObject } from '@shared/types';
 import { HandleValidation } from '@shared/yup';
-import { object, string } from 'yup';
+import { mixed, object, string } from 'yup';
 
 export const createTaskSchema = object({
   title: string().required(),
   description: string().required(),
 });
 
+export const updateTaskSchema = object({
+  id: string().required(),
+  title: string().required(),
+  description: string().required(),
+  status: mixed().oneOf(Object.values(StatusTask)).required(),
+});
+
 export interface TaskValidator {
-  validateCreateTaskInput: (data: JSONObject) => Promise<CreateTaskInputParams>;
+  validateCreateTaskInput: (data: JSONObject) => CreateTaskInputParams;
+  validateUpdateTaskInput: (data: JSONObject) => UpdateTaskInputParams;
 }
 
 export interface TaskYupValidatorProps {
@@ -19,16 +29,16 @@ export interface TaskYupValidatorProps {
 export const TaskYupValidator = ({
   handleValidation,
 }: TaskYupValidatorProps): TaskValidator => {
-  const validateCreateTaskInput = async (
-    data: JSONObject,
-  ): Promise<CreateTaskInputParams> => {
-    return await handleValidation<CreateTaskInputParams>(
-      createTaskSchema,
-      data,
-    );
+  const validateCreateTaskInput = (data: JSONObject): CreateTaskInputParams => {
+    return handleValidation<CreateTaskInputParams>(createTaskSchema, data);
+  };
+
+  const validateUpdateTaskInput = (data: JSONObject): UpdateTaskInputParams => {
+    return handleValidation<UpdateTaskInputParams>(updateTaskSchema, data);
   };
 
   return {
     validateCreateTaskInput,
+    validateUpdateTaskInput,
   };
 };

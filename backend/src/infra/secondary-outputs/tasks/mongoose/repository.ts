@@ -1,11 +1,11 @@
-import { TaskStatus } from '@domain/tasks/model';
+import { StatusTask } from '@domain/tasks/model';
 import { TaskEntity } from './entity';
 
 interface CreateProps {
   id: string;
   title: string;
   description: string;
-  status: TaskStatus;
+  status: StatusTask;
 }
 
 export const TaskMongooseRepository = () => {
@@ -32,5 +32,20 @@ export const TaskMongooseRepository = () => {
     });
   };
 
-  return { create, getAll };
+  const update = async (data: CreateProps) => {
+    const task = await TaskEntity.findOneAndUpdate({ id: data.id });
+
+    if (!task) {
+      throw new Error('Task not found');
+    }
+
+    return {
+      id: task.id,
+      title: task.title,
+      description: task.description,
+      status: task.status,
+    };
+  };
+
+  return { create, getAll, update };
 };

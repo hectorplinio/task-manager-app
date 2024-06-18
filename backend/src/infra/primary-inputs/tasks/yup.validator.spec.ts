@@ -1,3 +1,4 @@
+import { StatusTask } from '@domain/tasks/model';
 import {
   createTaskSchema,
   TaskYupValidator,
@@ -9,7 +10,7 @@ const containerMock = {
 };
 
 describe('TaskValidator', () => {
-  const { validateCreateTaskInput } = TaskYupValidator(
+  const { validateCreateTaskInput, validateUpdateTaskInput } = TaskYupValidator(
     containerMock as unknown as TaskYupValidatorProps,
   );
 
@@ -24,6 +25,17 @@ describe('TaskValidator', () => {
     };
 
     expect(() => validateCreateTaskInput(validInput)).not.toThrow();
+  });
+
+  it('should validate correct input', () => {
+    const validInput = {
+      id: '1',
+      title: 'Test Task',
+      description: 'This is a test task description',
+      status: StatusTask.TODO,
+    };
+
+    expect(() => validateUpdateTaskInput(validInput)).not.toThrow();
   });
 
   it('should throw validation error for invalid input', () => {
