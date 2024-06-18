@@ -11,6 +11,12 @@ module.exports = {
     '^@infra/(.*)$': '<rootDir>/src/infra/$1',
     '^@application/(.*)$': '<rootDir>/src/application/$1',
     '^@domain/(.*)$': '<rootDir>/src/domain/$1',
+    '^@shared/(.*)$': '<rootDir>/src/shared/$1',
   },
-  coveragePathIgnorePatterns: ['<rootDir>/src/index.ts'],
+  coveragePathIgnorePatterns: [
+    '<rootDir>/src/index.ts',
+    '<rootDir>/src/shared/index.ts',
+    '<rootDir>/src/shared/types.ts',
+    '<rootDir>/src/shared/yup.ts',
+  ],
 };
