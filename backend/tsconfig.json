@@ -22,7 +22,8 @@
       "@root/*": ["../*"],
       "@application/*": ["application/*"],
       "@domain/*": ["domain/*"],
-      "@infra/*": ["infra/*"]
+      "@infra/*": ["infra/*"],
+      "@shared/*": ["shared/*"]
     },
     "strictPropertyInitialization": false,
     "experimentalDecorators": true,

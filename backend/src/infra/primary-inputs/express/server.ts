@@ -3,6 +3,7 @@ import { Server } from 'http';
 import { checkRouter } from '@infra/primary-inputs/check/express/router';
 import { scopePerRequest } from 'awilix-express';
 import { container } from '@infra/shared/awilix';
+import { taskRouter } from '../tasks/express/router';
 
 export interface ServerApplication {
   app: ExpressApplication;
@@ -23,6 +24,7 @@ const createServer = async (
 
   // ENDPOINTS
   app.use('/check', checkRouter);
+  app.use('/tasks', taskRouter);
 
   const close = (): Promise<void> => {
     return new Promise((resolve) => {
