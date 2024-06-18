@@ -11,8 +11,26 @@ interface CreateProps {
 export const TaskMongooseRepository = () => {
   const create = async (data: CreateProps) => {
     const task = new TaskEntity(data);
-    return await task.save();
+    const savedTasks = await task.save();
+    return {
+      id: savedTasks.id,
+      title: savedTasks.title,
+      description: savedTasks.description,
+      status: savedTasks.status,
+    };
   };
 
-  return { create };
+  const getAll = async () => {
+    const tasks = await TaskEntity.find();
+    return tasks.map((task) => {
+      return {
+        id: task.id,
+        title: task.title,
+        description: task.description,
+        status: task.status,
+      };
+    });
+  };
+
+  return { create, getAll };
 };
