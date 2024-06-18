@@ -1,6 +1,6 @@
 import { TaskRepository } from '../repository.port';
 import { CreateTaskInputParams, CreateTaskUsecase } from './create.port';
-import { Task, TaskStatus } from '@domain/tasks/model';
+import { Task, StatusTask } from '@domain/tasks/model';
 import { v4 as uuid } from 'uuid';
 
 export interface CreateTaskProps {
@@ -15,7 +15,7 @@ export const createTaskUsecase = ({
       id: uuid(),
       title: data.title,
       description: data.description,
-      status: TaskStatus.TODO,
+      status: StatusTask.TODO,
     });
     return task;
   };

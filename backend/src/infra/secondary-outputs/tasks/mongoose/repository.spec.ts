@@ -1,6 +1,6 @@
 import { TaskMongooseRepository } from './repository';
 import { TaskEntity } from './entity';
-import { TaskStatus } from '@domain/tasks/model';
+import { StatusTask } from '@domain/tasks/model';
 
 jest.mock('./entity');
 
@@ -21,7 +21,7 @@ describe('TaskMongooseRepository', () => {
       id: '1',
       title: 'Test Task',
       description: 'This is a test task description',
-      status: TaskStatus.TODO,
+      status: StatusTask.TODO,
     });
 
     expect(task).toHaveProperty('title', 'Test Task');
@@ -29,5 +29,56 @@ describe('TaskMongooseRepository', () => {
       'description',
       'This is a test task description',
     );
+  });
+
+  it('should get all tasks successfully', async () => {
+    (TaskEntity.find as jest.Mock).mockResolvedValue([
+      {
+        title: 'Test Task',
+        description: 'This is a test task description',
+      },
+    ]);
+
+    const tasks = await repository.getAll();
+
+    expect(tasks).toHaveLength(1);
+    expect(tasks[0]).toHaveProperty('title', 'Test Task');
+    expect(tasks[0]).toHaveProperty(
+      'description',
+      'This is a test task description',
+    );
+  });
+
+  it('should update a task successfully', async () => {
+    (TaskEntity.findOneAndUpdate as jest.Mock).mockResolvedValue({
+      title: 'Test Task',
+      description: 'This is a test task description',
+    });
+
+    const task = await repository.update({
+      id: '1',
+      title: 'Test Task',
+      description: 'This is a test task description',
+      status: StatusTask.TODO,
+    });
+
+    expect(task).toHaveProperty('title', 'Test Task');
+    expect(task).toHaveProperty(
+      'description',
+      'This is a test task description',
+    );
+  });
+
+  it('should throw an error when task is not found', async () => {
+    (TaskEntity.findOneAndUpdate as jest.Mock).mockResolvedValue(null);
+
+    await expect(
+      repository.update({
+        id: '1',
+        title: 'Test Task',
+        description: 'This is a test task description',
+        status: StatusTask.TODO,
+      }),
+    ).rejects.toThrow('Task not found');
   });
 });

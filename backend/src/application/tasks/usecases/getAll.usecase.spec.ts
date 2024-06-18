@@ -1,5 +1,5 @@
 import { TaskRepository } from '../repository.port';
-import { Task, TaskStatus } from '@domain/tasks/model';
+import { Task, StatusTask } from '@domain/tasks/model';
 import { getAllTasksUsecase } from './getAll.usecase';
 
 describe('getAllTasksUsecase', () => {
@@ -17,7 +17,7 @@ describe('getAllTasksUsecase', () => {
         id: 'uuid',
         title: 'Test Task',
         description: 'Test Description',
-        status: TaskStatus.TODO,
+        status: StatusTask.TODO,
       },
     ];
 

@@ -1,35 +1,37 @@
-import { createTaskUsecase } from './create.usecase';
+import { updateTaskUsecase } from './update.usecase';
 import { TaskRepository } from '../repository.port';
 import { StatusTask } from '@domain/tasks/model';
 
-describe('createTaskUsecase', () => {
+describe('updateTaskUsecase', () => {
   const mockTaskRepository = {
-    create: jest.fn(),
+    update: jest.fn(),
   };
 
-  const usecase = createTaskUsecase({
+  const usecase = updateTaskUsecase({
     taskRepository: mockTaskRepository as unknown as TaskRepository,
   });
 
-  it('should create a task successfully', async () => {
+  it('should update a task successfully', async () => {
     const taskData = {
+      id: 'uuid',
       title: 'Test Task',
       description: 'Test Description',
+      status: StatusTask.IN_PROGRESS,
     };
 
-    const createdTask = {
+    const updatedTask = {
       id: 'uuid',
       title: taskData.title,
       description: taskData.description,
-      status: StatusTask.TODO,
+      status: StatusTask.IN_PROGRESS,
     };
 
-    mockTaskRepository.create.mockResolvedValue(createdTask);
+    mockTaskRepository.update.mockResolvedValue(updatedTask);
 
     const result = await usecase(taskData);
 
-    expect(result).toEqual(createdTask);
-    expect(mockTaskRepository.create).toHaveBeenCalledWith(
+    expect(result).toEqual(taskData);
+    expect(mockTaskRepository.update).toHaveBeenCalledWith(
       expect.objectContaining(taskData),
     );
   });
