@@ -1,5 +1,6 @@
 import { createTaskController } from './create.controller';
 import { getAllTasksController } from './getAll.controller';
+import { removeTaskController } from './remove.controller';
 import { taskRouter } from './router';
 import { updateTaskController } from './update.controller.';
 
@@ -8,6 +9,7 @@ jest.mock('express', () => ({
     post: jest.fn(),
     get: jest.fn(),
     put: jest.fn(),
+    delete: jest.fn(),
   })),
 }));
 
@@ -20,7 +22,11 @@ describe('Task router', () => {
     expect(taskRouter.get).toHaveBeenCalledWith('/', getAllTasksController);
   });
 
-  it('/ route uses updateTaskController', () => {
-    expect(taskRouter.put).toHaveBeenCalledWith('/', updateTaskController);
+  it('/:id route uses updateTaskController', () => {
+    expect(taskRouter.put).toHaveBeenCalledWith('/:id', updateTaskController);
+  });
+
+  it('/:id route uses removeTaskController', () => {
+    expect(taskRouter.delete).toHaveBeenCalledWith('/:id', removeTaskController);
   });
 });

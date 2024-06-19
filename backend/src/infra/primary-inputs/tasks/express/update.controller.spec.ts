@@ -20,8 +20,8 @@ const mockReq = {
       taskValidator: taskValidatorMock,
     },
   },
+  params: '1',
   body: {
-    id: '1',
     title: 'Test Task',
     description: 'This is a test task description',
     status: StatusTask.TODO,

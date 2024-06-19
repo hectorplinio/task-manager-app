@@ -1,5 +1,6 @@
 import { StatusTask } from '@domain/tasks/model';
 import { TaskEntity } from './entity';
+import { EntityNotFoundError } from '@shared/error';
 
 interface CreateProps {
   id: string;
@@ -36,7 +37,7 @@ export const TaskMongooseRepository = () => {
     const task = await TaskEntity.findById({ _id: data.id });
 
     if (!task) {
-      throw new Error('Task not found');
+      throw new EntityNotFoundError('Task not found');
     }
     const newTask = new TaskEntity(data);
 
@@ -50,5 +51,13 @@ export const TaskMongooseRepository = () => {
     };
   };
 
-  return { create, getAll, update };
+  const remove = async (id: string) => {
+    const removedTask = await TaskEntity.findByIdAndDelete({ _id: id });
+    if (!removedTask) {
+      throw new EntityNotFoundError('Task not found');
+    }
+    return
+  };
+
+  return { create, getAll, update, remove };
 };

@@ -17,9 +17,14 @@ export const updateTaskSchema = object({
   status: mixed().oneOf(Object.values(StatusTask)).required(),
 });
 
+export const removeTaskSchema = object({
+  id: string().required(),
+});
+
 export interface TaskValidator {
   validateCreateTaskInput: (data: JSONObject) => Promise<CreateTaskInputParams>;
   validateUpdateTaskInput: (data: JSONObject) => Promise<UpdateTaskInputParams>;
+  validateRemoveTaskInput: (data: JSONObject) => Promise<{ id: string }>;
 }
 
 export interface TaskYupValidatorProps {
@@ -47,8 +52,15 @@ export const TaskYupValidator = ({
     );
   };
 
+  const validateRemoveTaskInput = async (
+    data: JSONObject,
+  ): Promise<{ id: string }> => {
+    return await handleValidation<{ id: string }>(removeTaskSchema, data);
+  };
+
   return {
     validateCreateTaskInput,
     validateUpdateTaskInput,
+    validateRemoveTaskInput,
   };
 };

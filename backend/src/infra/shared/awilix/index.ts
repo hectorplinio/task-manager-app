@@ -11,12 +11,15 @@ import { GetAllTasksUsecase } from '@application/tasks/usecases/getAll.port';
 import { getAllTasksUsecase } from '@application/tasks/usecases/getAll.usecase';
 import { UpdateTaskUsecase } from '@application/tasks/usecases/update.port';
 import { updateTaskUsecase } from '@application/tasks/usecases/update.usecase';
+import { RemoveTaskUsecase } from '@application/tasks/usecases/remove.port';
+import { removeTaskUsecase } from '@application/tasks/usecases/remove.usecase';
 
 interface Cradle {
   taskRepository: ReturnType<typeof TaskMongooseRepository>;
   createTaskUsecase: CreateTaskUsecase;
   getAllTasksUsecase: GetAllTasksUsecase;
   updateTaskUsecase: UpdateTaskUsecase;
+  removeTaskUsecase: RemoveTaskUsecase;
   taskValidator: TaskValidator;
   handleValidation: IHandleValidation;
 }
@@ -30,6 +33,7 @@ container.register({
   handleValidation: asFunction(HandleValidation).singleton(),
   getAllTasksUsecase: asFunction(getAllTasksUsecase),
   updateTaskUsecase: asFunction(updateTaskUsecase),
+  removeTaskUsecase: asFunction(removeTaskUsecase),
 });
 
 export { container };

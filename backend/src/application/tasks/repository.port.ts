@@ -4,4 +4,5 @@ export interface TaskRepository {
   create: (data: Task) => Promise<Task>;
   getAll: () => Promise<Task[]>;
   update: (data: Task) => Promise<Task>;
+  remove: (id: string) => Promise<void>;
 }
