@@ -1,6 +1,7 @@
 import { StatusTask } from '@domain/tasks/model';
 import {
   createTaskSchema,
+  removeTaskSchema,
   TaskYupValidator,
   TaskYupValidatorProps,
 } from './yup.validator';
@@ -10,9 +11,11 @@ const containerMock = {
 };
 
 describe('TaskValidator', () => {
-  const { validateCreateTaskInput, validateUpdateTaskInput } = TaskYupValidator(
-    containerMock as unknown as TaskYupValidatorProps,
-  );
+  const {
+    validateCreateTaskInput,
+    validateUpdateTaskInput,
+    validateRemoveTaskInput,
+  } = TaskYupValidator(containerMock as unknown as TaskYupValidatorProps);
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -47,6 +50,19 @@ describe('TaskValidator', () => {
 
     expect(containerMock.handleValidation).toBeCalledWith(
       createTaskSchema,
+      invalidInput,
+    );
+  });
+
+  it('should validate remove task input', () => {
+    const invalidInput = {
+      id: '1',
+    };
+
+    validateRemoveTaskInput(invalidInput);
+
+    expect(containerMock.handleValidation).toBeCalledWith(
+      removeTaskSchema,
       invalidInput,
     );
   });
