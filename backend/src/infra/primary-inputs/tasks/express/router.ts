@@ -9,7 +9,7 @@ const router = Router();
 
 router.post('/', createTaskController);
 router.get('/', getAllTasksController);
-router.put('/', updateTaskController);
-router.delete('/', removeTaskController);
+router.put('/:id', updateTaskController);
+router.delete('/:id', removeTaskController);
 
 export { router as taskRouter };

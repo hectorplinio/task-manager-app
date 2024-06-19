@@ -22,11 +22,11 @@ describe('Task router', () => {
     expect(taskRouter.get).toHaveBeenCalledWith('/', getAllTasksController);
   });
 
-  it('/ route uses updateTaskController', () => {
-    expect(taskRouter.put).toHaveBeenCalledWith('/', updateTaskController);
+  it('/:id route uses updateTaskController', () => {
+    expect(taskRouter.put).toHaveBeenCalledWith('/:id', updateTaskController);
   });
 
-  it('/ route uses removeTaskController', () => {
-    expect(taskRouter.delete).toHaveBeenCalledWith('/', removeTaskController);
+  it('/:id route uses removeTaskController', () => {
+    expect(taskRouter.delete).toHaveBeenCalledWith('/:id', removeTaskController);
   });
 });

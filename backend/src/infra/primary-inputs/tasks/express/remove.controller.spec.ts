@@ -9,16 +9,13 @@ jest.mock('@infra/primary-inputs/shared/handleControllerError', () => ({
 
 const removeTaskUsecaseMock = jest.fn();
 
-const taskValidatorMock = { validateRemoveTaskInput: jest.fn() };
-
 const mockReq = {
   container: {
     cradle: {
       removeTaskUsecase: removeTaskUsecaseMock,
-      taskValidator: taskValidatorMock,
     },
   },
-  body: { id: '1' },
+  params: '1',
 } as unknown as Request;
 
 const mockRes = {
@@ -33,16 +30,9 @@ describe('Remove Tasks Controller', () => {
     (
       mockReq.container?.cradle.removeTaskUsecase as jest.Mock
     ).mockResolvedValue(undefined);
-    (
-      mockReq.container?.cradle.taskValidator
-        .validateRemoveTaskInput as jest.Mock
-    ).mockResolvedValue({ id: '1' });
 
     await removeTaskController(mockReq, mockRes);
 
-    expect(
-      mockReq.container?.cradle.taskValidator.validateRemoveTaskInput,
-    ).toHaveBeenCalled();
     expect(mockReq.container?.cradle.removeTaskUsecase).toHaveBeenCalled();
     expect(mockRes.status).toHaveBeenCalledWith(200);
     expect(mockRes.send).toHaveBeenCalledWith();
