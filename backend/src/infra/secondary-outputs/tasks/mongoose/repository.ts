@@ -56,7 +56,7 @@ export const TaskMongooseRepository = () => {
     if (!removedTask) {
       throw new EntityNotFoundError('Task not found');
     }
-    return
+    return;
   };
 
   return { create, getAll, update, remove };
