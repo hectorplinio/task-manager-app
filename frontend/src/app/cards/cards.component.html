@@ -1,0 +1,143 @@
+<div class="flex flex-col items-center min-h-screen py-8">
+  <h1 class="text-4xl font-bold mb-8 text-blue-800">TASK MANAGER</h1>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full px-4">
+    <div
+      class="bg-white shadow-lg rounded-lg p-4 h-64 flex items-center justify-center cursor-pointer"
+      *ngIf="!addingTask"
+      (click)="addNewTask()"
+    >
+      <span class="text-6xl text-gray-400">+</span>
+    </div>
+
+    <form
+      class="bg-white shadow-lg rounded-lg p-4 h-64 flex flex-col justify-between"
+      *ngIf="addingTask"
+      (ngSubmit)="createTask()"
+    >
+      <div class="mb-2">
+        <label class="block text-gray-700">Title</label>
+        <input
+          [(ngModel)]="newTask.title"
+          name="newTitle"
+          placeholder="Title"
+          class="w-full px-2 py-1 border rounded"
+          required
+        />
+      </div>
+      <div class="mb-2">
+        <label class="block text-gray-700">Description</label>
+        <textarea
+          [(ngModel)]="newTask.description"
+          name="newDescription"
+          placeholder="Description"
+          class="w-full px-2 py-1 border rounded"
+          required
+        ></textarea>
+      </div>
+      <div class="flex justify-end space-x-2">
+        <button
+          type="submit"
+          class="bg-blue-500 text-white px-4 py-2 rounded shadow"
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          (click)="cancelNewTask()"
+          class="bg-red-500 text-white px-4 py-2 rounded shadow"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+
+    <div
+      class="bg-white shadow-lg rounded-lg p-4 h-64 flex flex-col justify-between relative card"
+      *ngFor="let task of tasks"
+    >
+      <div class="flex justify-between items-center mb-2">
+        <div *ngIf="editingTask === task.id; else viewMode">
+          <input
+            [(ngModel)]="editingTaskData.title"
+            name="editTitle"
+            class="text-xl font-semibold border px-2 py-1 rounded"
+          />
+        </div>
+        <ng-template #viewMode>
+          <h3 class="text-xl font-semibold">{{ task.title }}</h3>
+        </ng-template>
+      </div>
+      <div *ngIf="editingTask === task.id; else viewDescription">
+        <textarea
+          [(ngModel)]="editingTaskData.description"
+          name="editDescription"
+          class="w-full px-2 py-1 border rounded"
+        ></textarea>
+      </div>
+      <ng-template #viewDescription>
+        <p class="mb-2">{{ task.description }}</p>
+      </ng-template>
+      <div class="relative">
+        <span
+          (click)="toggleStatusDropdown(task)"
+          [ngClass]="StatusMapper[task.status].class"
+          class="cursor-pointer w-32 px-2 py-1 rounded-full font-bold text-center inline-block"
+        >
+          {{ StatusMapper[task.status].label }}
+        </span>
+        <div
+          *ngIf="statusDropdown === task.id"
+          class="absolute bg-white shadow-md rounded mt-1 z-10"
+        >
+          <ul class="py-1">
+            <li
+              *ngIf="task.status === StatusTask.TODO"
+              (click)="changeTaskStatus(task, StatusTask.IN_PROGRESS)"
+              class="bg-yellow-200 px-4 py-2 cursor-pointer rounded-t-md"
+            >
+              Move to IN PROGRESS
+            </li>
+            <li
+              *ngIf="task.status === StatusTask.IN_PROGRESS"
+              (click)="changeTaskStatus(task, StatusTask.DONE)"
+              class="bg-green-200 px-4 py-2 cursor-pointer"
+            >
+              Move to DONE
+            </li>
+            <li
+              *ngIf="task.status === StatusTask.IN_PROGRESS"
+              (click)="changeTaskStatus(task, StatusTask.TODO)"
+              class="bg-gray-200 px-4 py-2 cursor-pointer"
+            >
+              Move to TO-DO
+            </li>
+            <li
+              *ngIf="task.status === StatusTask.DONE"
+              (click)="changeTaskStatus(task, StatusTask.IN_PROGRESS)"
+              class="bg-yellow-200 px-4 py-2 cursor-pointer rounded-b-md"
+            >
+              Move to IN PROGRESS
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="absolute bottom-2 right-2 space-x-2 flex flex-col">
+        <div class="flex space-x-2">
+          <button
+            *ngIf="task.status === 'TODO' && editingTask !== task.id"
+            (click)="startEditing(task)"
+          >
+            ✏️
+          </button>
+          <button *ngIf="editingTask === task.id" (click)="saveTask(task)">
+            ✔️
+          </button>
+          <button *ngIf="editingTask === task.id" (click)="cancelEditing()">
+            ❌
+          </button>
+          <button (click)="deleteTask(task.id)">🗑️</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
