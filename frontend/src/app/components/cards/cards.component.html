@@ -1,0 +1,62 @@
+<div class="flex flex-col items-center min-h-screen py-8">
+  <h1 class="text-4xl font-bold mb-8 text-blue-800">TASK MANAGER</h1>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full px-4">
+    <div
+      class="bg-white shadow-lg rounded-lg p-4 h-64 flex items-center justify-center cursor-pointer"
+      *ngIf="!addingTask"
+      (click)="addNewTask()"
+    >
+      <span class="text-6xl text-gray-400">+</span>
+    </div>
+
+    <form
+      class="bg-white shadow-lg rounded-lg p-4 h-64 flex flex-col justify-between"
+      *ngIf="addingTask"
+      (ngSubmit)="createTask()"
+    >
+      <div class="mb-2">
+        <label class="block text-gray-700">Title</label>
+        <input
+          [(ngModel)]="newTask.title"
+          name="newTitle"
+          placeholder="Title"
+          class="w-full px-2 py-1 border rounded"
+          required
+        />
+      </div>
+      <div class="mb-2">
+        <label class="block text-gray-700">Description</label>
+        <textarea
+          [(ngModel)]="newTask.description"
+          name="newDescription"
+          placeholder="Description"
+          class="w-full px-2 py-1 border rounded"
+          required
+        ></textarea>
+      </div>
+      <div class="flex justify-end space-x-2">
+        <button
+          type="submit"
+          class="bg-blue-500 text-white px-4 py-2 rounded shadow"
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          (click)="cancelNewTask()"
+          class="bg-red-500 text-white px-4 py-2 rounded shadow"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+
+    <app-task-card
+      *ngFor="let task of tasks"
+      [task]="task"
+      (editTask)="handleEditTask($event)"
+      (deleteTask)="handleDeleteTask($event)"
+      (changeStatus)="handleChangeStatus($event)"
+    ></app-task-card>
+  </div>
+</div>

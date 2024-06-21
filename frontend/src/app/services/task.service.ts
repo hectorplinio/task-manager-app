@@ -1,19 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export enum StatusTask {
-  TODO = 'TODO',
-  IN_PROGRESS = 'IN_PROGRESS',
-  DONE = 'DONE',
-}
-
-export interface Task {
-  id: string;
-  title: string;
-  description: string;
-  status: StatusTask;
-}
+import { Task } from '@models/task.model';
 
 @Injectable({
   providedIn: 'root',
@@ -41,5 +29,9 @@ export class TaskService {
 
   deleteTask(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  getApiUrl(): string {
+    return this.apiUrl;
   }
 }

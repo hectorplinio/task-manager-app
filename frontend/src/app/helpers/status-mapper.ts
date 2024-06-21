@@ -1,8 +1,4 @@
-export enum StatusTask {
-  TODO = 'TODO',
-  IN_PROGRESS = 'IN_PROGRESS',
-  DONE = 'DONE',
-}
+import { StatusTask } from '@models/task.model';
 
 export const StatusMapper: {
   [key in StatusTask]: { label: string; class: string };
