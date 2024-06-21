@@ -9,7 +9,6 @@ import { StatusTask, Task } from '@models/task.model';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './task-card.component.html',
-  styleUrls: ['./task-card.component.css'],
 })
 export class TaskCardComponent {
   @Input() task!: Task;

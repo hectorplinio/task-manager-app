@@ -10,7 +10,6 @@ import { StatusTask, Task } from '@models/task.model';
   standalone: true,
   imports: [CommonModule, FormsModule, TaskCardComponent],
   templateUrl: './cards.component.html',
-  styleUrls: ['./cards.component.css'],
 })
 export class CardsComponent implements OnInit {
   tasks: Task[] = [];
