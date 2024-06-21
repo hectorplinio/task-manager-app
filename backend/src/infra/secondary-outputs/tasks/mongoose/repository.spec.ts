@@ -50,7 +50,7 @@ describe('TaskMongooseRepository', () => {
   });
 
   it('should update a task successfully', async () => {
-    (TaskEntity.findById as jest.Mock).mockResolvedValue({
+    (TaskEntity.findByIdAndUpdate as jest.Mock).mockResolvedValue({
       id: '1',
       title: 'Test Task',
       description: 'This is a test task description',
@@ -83,7 +83,7 @@ describe('TaskMongooseRepository', () => {
   });
 
   it('should throw an error when task is not found', async () => {
-    (TaskEntity.findById as jest.Mock).mockResolvedValue(null);
+    (TaskEntity.findByIdAndUpdate as jest.Mock).mockResolvedValue(null);
 
     await expect(
       repository.update({

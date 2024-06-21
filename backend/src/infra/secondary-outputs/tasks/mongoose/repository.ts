@@ -34,14 +34,15 @@ export const TaskMongooseRepository = () => {
   };
 
   const update = async (data: CreateProps) => {
-    const task = await TaskEntity.findById({ _id: data.id });
+    const updatedTask = await TaskEntity.findByIdAndUpdate(
+      data.id,
+      { $set: data },
+      { new: true },
+    );
 
-    if (!task) {
+    if (!updatedTask) {
       throw new EntityNotFoundError('Task not found');
     }
-    const newTask = new TaskEntity(data);
-
-    const updatedTask = await newTask.save();
 
     return {
       id: updatedTask.id,

@@ -1,20 +1,32 @@
 {
-  "name": "task-manager-frontend",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "commonjs",
+  "name": "task-manager-app-frontend",
   "version": "0.0.0",
+  "main": "src/index.ts",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "format": "prettier --write \"\"",
+    "lint": "eslint . --ext .ts,.tsx --config .eslintrc.cjs",
+    "lint:fix": "eslint . --ext .ts,.tsx --config .eslintrc.cjs --fix",
+    "type-check": "tsc --noEmit",
+    "postinstall": "husky install"
   },
-  "private": true,
+  "author": "Hector Plinio",
   "dependencies": {
     "@angular/animations": "^18.0.0",
+    "@angular/cdk": "^18.0.4",
     "@angular/common": "^18.0.0",
     "@angular/compiler": "^18.0.0",
     "@angular/core": "^18.0.0",
     "@angular/forms": "^18.0.0",
+    "@angular/material": "^18.0.4",
     "@angular/platform-browser": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
@@ -27,6 +39,12 @@
     "@angular/cli": "^18.0.4",
     "@angular/compiler-cli": "^18.0.0",
     "@types/jasmine": "~5.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.42.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "husky": "^9.0.11",
     "autoprefixer": "^10.4.19",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
@@ -34,6 +52,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "prettier": "^3.3.2",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4",
     "typescript": "~5.4.2"

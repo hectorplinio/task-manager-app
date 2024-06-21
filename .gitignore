@@ -23,7 +23,6 @@ yarn-error.log*
 
 # Angular specific files
 **/angular.json
-**/tsconfig.json
 **/tslint.json
 
 # Coverage
