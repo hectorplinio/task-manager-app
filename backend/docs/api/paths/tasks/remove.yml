@@ -1,24 +1,24 @@
 delete:
   summary: Delete a task
+  operationId: deleteTask
   parameters:
-    - in: path
-      name: id
+    - name: id
+      in: path
       required: true
       schema:
         type: string
-      description: Task ID
   responses:
-    200:
+    '204':
       description: Task deleted successfully
-    400:
-      description: Invalid request
+    '400':
+      description: Bad request
       content:
         application/json:
           schema:
-            $ref: '../../components/schemas/error.yml'
-    404:
+            $ref: '#/components/schemas/Error'
+    '404':
       description: Task not found
       content:
         application/json:
           schema:
-            $ref: '../../components/schemas/error.yml'
+            $ref: '#/components/schemas/Error'

@@ -1,4 +1,3 @@
-GetAllTasksResponse:
-  type: array
-  items:
-    $ref: '#/components/schemas/Task'
+type: array
+items:
+  $ref: '#/components/schemas/Task'

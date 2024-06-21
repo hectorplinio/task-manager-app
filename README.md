@@ -22,12 +22,14 @@ The project is organized into two main parts:
   - [Running the Application](#running-the-application)
     - [Backend](#backend)
     - [Frontend](#frontend)
+    - [Docker](#docker)
   - [Architecture](#architecture)
+    - [Key Components](#key-components)
   - [Folder Structure](#folder-structure)
   - [Development](#development)
     - [Style guide](#style-guide)
     - [Testing](#testing)
-    - [Running tests](#running-tests)
+      - [Running tests](#running-tests)
   - [After finishing a task](#after-finishing-a-task)
   - [Contributing](#contributing)
   - [License](#license)
@@ -39,25 +41,26 @@ The project is organized into two main parts:
 - Node.js >= 20.0.0
 - npm >= 7.0.0
 - Angular CLI >= 12.0.0
+- Docker and Docker Compose
 
 ### Installation
 
 1. Clone the repository:
 
-```bash
-git clone https://github.com/hectorplinio/task-manager-app.git
-cd task-manager-app
-```
+   ```bash
+   git clone https://github.com/hectorplinio/task-manager-app.git
+   cd task-manager-app
+   ```
 
 2. Install the dependencies for both frontend and backend:
 
-```
-cd backend
-npm install
+   ```bash
+   cd backend
+   npm install
 
-cd ../frontend
-npm install
-```
+   cd ../frontend
+   npm install
+   ```
 
 ## Running the Application
 
@@ -66,6 +69,7 @@ npm install
 To run the application in development mode, use the following command:
 
 ```
+cd backend
 npm run dev
 ```
 
@@ -88,6 +92,7 @@ npm start
 To run the application in development mode, use the following command:
 
 ```
+cd frontend
 ng serve
 ```
 
@@ -97,6 +102,24 @@ To build the application for production, use the following command:
 
 ```
 ng build
+```
+
+### Docker
+
+To run the application using Docker, use the following commands:
+
+1. Build and run the containers:
+
+```
+make run-server && make run-frontend
+```
+
+This will start the application on http://localhost:4200.
+
+2. Stop and remove the containers:
+
+```
+make clean
 ```
 
 ## Architecture
@@ -116,6 +139,11 @@ The application is built with Angular for the frontend and Node.js with Express 
 task-manager-app/
 ├── backend/                 # Backend code
 │   ├── src/                 # Source code
+│   ├── docs/                # API documentation
+│   │   ├── api/             # OpenAPI (Swagger) documentation
+│   │   ├── components/      # Reusable components (schemas, responses)
+│   │   ├── paths/           # Endpoint paths
+│   │   └── spec.yml         # Main OpenAPI specification file
 │   ├── Dockerfile           # Dockerfile for backend
 │   └── package.json         # Backend dependencies and scripts
 ├── frontend/                # Frontend code
@@ -125,6 +153,7 @@ task-manager-app/
 │   └── README.md            # Frontend documentation
 ├── docker-compose.yml       # Docker Compose file
 └── README.md                # Project documentation
+
 
 ```
 

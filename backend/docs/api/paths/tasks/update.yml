@@ -1,35 +1,34 @@
 put:
-  summary: Update an existing task
+  summary: Update a task
+  operationId: updateTask
   parameters:
-    - in: path
-      name: id
+    - name: id
+      in: path
       required: true
       schema:
         type: string
-      description: Task ID
   requestBody:
-    description: Task object that needs to be updated
     required: true
     content:
       application/json:
         schema:
-          $ref: '../../components/schemas/task-input.yml'
+          $ref: '#/components/schemas/TaskInput'
   responses:
-    200:
+    '200':
       description: Task updated successfully
       content:
         application/json:
           schema:
-            $ref: '../../components/schemas/task.yml'
-    400:
-      description: Invalid input
+            $ref: '#/components/responses/TaskResponse'
+    '400':
+      description: Bad request
       content:
         application/json:
           schema:
-            $ref: '../../components/schemas/error.yml'
-    404:
+            $ref: '#/components/schemas/Error'
+    '404':
       description: Task not found
       content:
         application/json:
           schema:
-            $ref: '../../components/schemas/error.yml'
+            $ref: '#/components/schemas/Error'

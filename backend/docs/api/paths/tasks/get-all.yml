@@ -1,17 +1,16 @@
 get:
   summary: Get all tasks
+  operationId: getAllTasks
   responses:
-    200:
-      description: A list of tasks
+    '200':
+      description: Successful response
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: '../../components/schemas/task.yml'
-    400:
-      description: Invalid request
+            $ref: '#/components/responses/GetAllTasksResponse'
+    '400':
+      description: Bad request
       content:
         application/json:
           schema:
-            $ref: '../../components/schemas/error.yml'
+            $ref: '#/components/schemas/Error'

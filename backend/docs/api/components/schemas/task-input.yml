@@ -1,8 +1,4 @@
 type: object
-required:
-  - title
-  - description
-  - status
 properties:
   title:
     type: string
@@ -14,3 +10,7 @@ properties:
       - TODO
       - IN_PROGRESS
       - DONE
+required:
+  - title
+  - description
+  - status
