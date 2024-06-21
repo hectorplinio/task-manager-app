@@ -1,10 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AppComponent],
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [AppComponent, provideHttpClientTesting()],
+      imports: [],
     }).compileComponents();
   });
 
@@ -14,18 +16,18 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'task-manager-frontend' title`, () => {
+  it(`should have as title 'task-manager'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('task-manager-frontend');
+    expect(app.title).toEqual('task-manager');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Hello, task-manager-frontend',
+    expect(compiled.querySelector('.content span')?.textContent).toContain(
+      'task-manager app is running!',
     );
   });
 });

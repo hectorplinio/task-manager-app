@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TaskService, Task, StatusTask } from '../task.service';
+import { TaskService } from '@services/task.service';
 import { FormsModule } from '@angular/forms';
-import { StatusMapper } from './status-mapper';
+import { TaskCardComponent } from '@components/task-card/task-card.component';
+import { StatusTask, Task } from '@models/task.model';
 
 @Component({
   selector: 'app-cards',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TaskCardComponent],
   templateUrl: './cards.component.html',
   styleUrls: ['./cards.component.css'],
 })
@@ -15,11 +16,6 @@ export class CardsComponent implements OnInit {
   tasks: Task[] = [];
   addingTask = false;
   newTask: Omit<Task, 'id' | 'status'> = { title: '', description: '' };
-  editingTask: string | null = null;
-  editingTaskData: Omit<Task, 'id' | 'status'> = { title: '', description: '' };
-  statusDropdown: string | null = null;
-  StatusMapper = StatusMapper;
-  StatusTask = StatusTask;
 
   constructor(private taskService: TaskService) {}
 
@@ -51,40 +47,22 @@ export class CardsComponent implements OnInit {
     });
   }
 
-  startEditing(task: Task): void {
-    this.editingTask = task.id;
-    this.editingTaskData = { title: task.title, description: task.description };
+  handleEditTask(updatedTask: Task): void {
+    this.taskService.updateTask(updatedTask).subscribe(() => this.loadTasks());
   }
 
-  saveTask(task: Task): void {
-    const updatedTask = {
-      ...task,
-      title: this.editingTaskData.title,
-      description: this.editingTaskData.description,
-    };
-    this.taskService.updateTask(updatedTask).subscribe(() => {
-      this.loadTasks();
-      this.editingTask = null;
-    });
-  }
-
-  cancelEditing(): void {
-    this.editingTask = null;
-  }
-
-  deleteTask(id: string): void {
+  handleDeleteTask(id: string): void {
     this.taskService.deleteTask(id).subscribe(() => this.loadTasks());
   }
 
-  toggleStatusDropdown(task: Task): void {
-    this.statusDropdown = this.statusDropdown === task.id ? null : task.id;
-  }
-
-  changeTaskStatus(task: Task, newStatus: StatusTask): void {
+  handleChangeStatus({
+    task,
+    newStatus,
+  }: {
+    task: Task;
+    newStatus: StatusTask;
+  }): void {
     const updatedTask = { ...task, status: newStatus };
-    this.taskService.updateTask(updatedTask).subscribe(() => {
-      this.loadTasks();
-      this.statusDropdown = null;
-    });
+    this.taskService.updateTask(updatedTask).subscribe(() => this.loadTasks());
   }
 }
