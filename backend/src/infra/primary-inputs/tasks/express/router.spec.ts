@@ -27,6 +27,9 @@ describe('Task router', () => {
   });
 
   it('/:id route uses removeTaskController', () => {
-    expect(taskRouter.delete).toHaveBeenCalledWith('/:id', removeTaskController);
+    expect(taskRouter.delete).toHaveBeenCalledWith(
+      '/:id',
+      removeTaskController,
+    );
   });
 });

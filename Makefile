@@ -1,8 +1,12 @@
-.PHONY: all build-backend build-frontend docker-build docker-up start-frontend
+.PHONY: all build-backend build-frontend docker-build docker-up start-frontend docs
 
 BACKEND_DIR=./backend
 FRONTEND_DIR=./frontend
 DOCKER_COMPOSE_FILE=./docker-compose.yml
+DOCS_DIR=$(BACKEND_DIR)/docs
+
+docs:
+	@docker run --rm -p 8080:8080 -v $(PWD)/$(DOCS_DIR)/api:/usr/share/nginx/html/swagger -e SWAGGER_JSON=/usr/share/nginx/html/swagger/spec.yml swaggerapi/swagger-ui
 
 run-server: build-backend docker-build docker-up
 

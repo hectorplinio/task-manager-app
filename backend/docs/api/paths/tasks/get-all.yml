@@ -1,0 +1,16 @@
+get:
+  summary: Get all tasks
+  operationId: getAllTasks
+  responses:
+    '200':
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/responses/GetAllTasksResponse'
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

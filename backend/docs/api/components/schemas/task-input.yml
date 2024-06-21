@@ -1,0 +1,16 @@
+type: object
+properties:
+  title:
+    type: string
+  description:
+    type: string
+  status:
+    type: string
+    enum:
+      - TODO
+      - IN_PROGRESS
+      - DONE
+required:
+  - title
+  - description
+  - status
